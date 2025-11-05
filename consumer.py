@@ -4,14 +4,17 @@ import json
 
 def main():
     app = Application(
-        broker_address="localhost:19092",
+        broker_address="127.0.0.1:19092, 127.0.0.1:29092, 127.0.0.1:39092",
+        #broker_address="localhost:19092",
         loglevel="DEBUG",
         consumer_group="weather_reader",
         auto_offset_reset="earliest",
+        producer_extra_config=
+        {"broker.address.family": "v4",}
     )
 
     with app.get_consumer() as consumer:
-        consumer.subscribe(["weather_data_demo"])
+        consumer.subscribe(["wikipedia-changes"])
 
         while True:
             msg = consumer.poll(1)
